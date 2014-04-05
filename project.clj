@@ -1,6 +1,6 @@
 (defproject briefmuter/briefmuter "0.0.1-SNAPSHOT"
   :description "App for muting the phone for a short period of time"
-  ;:url "http://example.com/FIXME" ; TODO
+  :url "https://github.com/nablaa/android-briefmuter"
   :license {:name "GNU General Public License, version 2"
             :url "https://www.gnu.org/licenses/gpl-2.0.html"}
   :min-lein-version "2.0.0"

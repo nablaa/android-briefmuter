@@ -22,7 +22,8 @@
         <category android:name='android.intent.category.DEFAULT'/>
       </intent-filter>
     </activity>
-    <activity android:name=".UnmuteActivity" android:noHistory="true">
+    <activity android:name=".UnmuteActivity" android:noHistory="true"
+              android:theme="@android:style/Theme.NoDisplay">
       <intent-filter>
         <action android:name='org.stuff.briefmuter.UNMUTER'/>
         <category android:name='android.intent.category.DEFAULT'/>

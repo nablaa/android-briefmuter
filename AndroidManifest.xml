@@ -16,9 +16,15 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".MainActivity">
+    <activity android:name=".MainActivity" android:noHistory="true">
       <intent-filter>
         <action android:name='org.stuff.briefmuter.MAIN'/>
+        <category android:name='android.intent.category.DEFAULT'/>
+      </intent-filter>
+    </activity>
+    <activity android:name=".UnmuteActivity" android:noHistory="true">
+      <intent-filter>
+        <action android:name='org.stuff.briefmuter.UNMUTER'/>
         <category android:name='android.intent.category.DEFAULT'/>
       </intent-filter>
     </activity>

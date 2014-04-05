@@ -43,5 +43,5 @@
   :on-create
   (fn [this bundle]
     (on-ui
-     (set-content-view! a
+     (set-content-view! this
       (make-ui main-layout)))))

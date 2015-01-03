@@ -11,6 +11,8 @@
 (def ^:const TEXT_15_MIN "15 min")
 (def ^:const INTERVAL_30_MIN (* 30 60 1000))
 (def ^:const TEXT_30_MIN "30 min")
+(def ^:const INTERVAL_45_MIN (* 45 60 1000))
+(def ^:const TEXT_45_MIN "45 min")
 (def ^:const INTERVAL_1_HOUR (* 60 60 1000))
 (def ^:const TEXT_1_HOUR "1 hour")
 
@@ -34,6 +36,8 @@
                             :on-click (fn [_] (trigger-mute-interval INTERVAL_15_MIN TEXT_15_MIN))}]
                   [:button {:text TEXT_30_MIN,
                             :on-click (fn [_] (trigger-mute-interval INTERVAL_30_MIN TEXT_30_MIN))}]
+                  [:button {:text TEXT_45_MIN,
+                            :on-click (fn [_] (trigger-mute-interval INTERVAL_45_MIN TEXT_45_MIN))}]
                   [:button {:text TEXT_1_HOUR,
                             :on-click (fn [_] (trigger-mute-interval INTERVAL_1_HOUR TEXT_1_HOUR))}]
                   ])

@@ -28,11 +28,12 @@ For more instructions, see lein droid
 A debug APK that can be installed on a phone is created as follows:
 
 ```bash
+lein droid build
 lein droid apk
 ```
 
 And a release APK is created the following way:
 
 ```bash
-lein droid release
+lein with-profile release droid doall
 ```

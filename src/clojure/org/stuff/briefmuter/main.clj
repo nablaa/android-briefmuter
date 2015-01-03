@@ -1,6 +1,6 @@
 (ns org.stuff.briefmuter.main
   (:use [neko.activity :only [defactivity set-content-view! *a]]
-        [neko.context :only [get-service]]
+        [neko.context :only [get-service context]]
         [neko.notify :only [toast construct-pending-intent]]
         [neko.threading :only [on-ui]]
         [neko.ui :only [make-ui]]))
@@ -18,9 +18,10 @@
 
 (defn trigger-mute-interval [interval text]
   (toast (str "Muting for " text))
+  [^Context context]
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)
-        pi (construct-pending-intent [:activity "org.stuff.briefmuter.UNMUTER"])]
+        pi (construct-pending-intent context [:activity "org.stuff.briefmuter.UNMUTER"])]
     (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_VIBRATE)
     (.set alarm-manager
           android.app.AlarmManager/ELAPSED_REALTIME_WAKEUP

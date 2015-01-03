@@ -1,5 +1,5 @@
 (ns org.stuff.briefmuter.main
-  (:use [neko.activity :only [defactivity set-content-view!]]
+  (:use [neko.activity :only [defactivity set-content-view! *a]]
         [neko.context :only [get-service]]
         [neko.notify :only [toast construct-pending-intent]]
         [neko.threading :only [on-ui]]
@@ -39,9 +39,9 @@
                   ])
 
 (defactivity org.stuff.briefmuter.MainActivity
-  :def a
+  :key :main
   :on-create
   (fn [this bundle]
     (on-ui
-     (set-content-view! this
+     (set-content-view! (*a)
       (make-ui main-layout)))))

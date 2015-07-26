@@ -1,9 +1,16 @@
 (ns org.stuff.briefmuter.main
-  (:use [neko.activity :only [defactivity set-content-view! *a]]
-        [neko.context :only [get-service context]]
-        [neko.notify :only [toast construct-pending-intent]]
-        [neko.threading :only [on-ui]]
-        [neko.ui :only [make-ui]]))
+  (:require [neko.activity :refer [defactivity set-content-view!]]
+            [neko.context :refer [get-service]]
+            [neko.debug :refer [*a]]
+            [neko.notify :refer [toast construct-pending-intent]]
+            [neko.resource :as res]
+            [neko.find-view :refer [find-view]]
+            [neko.threading :refer [on-ui]]
+            [neko.ui :refer [make-ui]]))
+
+;; We execute this function to import all subclasses of R class. This gives us
+;; access to all application resources.
+(res/import-all)
 
 (def ^:const INTERVAL_5_MIN (* 5 60 1000))
 (def ^:const TEXT_5_MIN "5 min")
@@ -16,37 +23,38 @@
 (def ^:const INTERVAL_1_HOUR (* 60 60 1000))
 (def ^:const TEXT_1_HOUR "1 hour")
 
-(defn trigger-mute-interval [interval text]
+(defn trigger-mute-interval [activity interval text]
   (toast (str "Muting for " text))
-  [^Context context]
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)
-        pi (construct-pending-intent context [:activity "org.stuff.briefmuter.UNMUTER"])]
+        pi (construct-pending-intent activity [:activity "org.stuff.briefmuter.UNMUTER"])]
     (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_VIBRATE)
     (.set alarm-manager
           android.app.AlarmManager/ELAPSED_REALTIME_WAKEUP
           (+ interval (android.os.SystemClock/elapsedRealtime))
           pi)))
 
-(def main-layout [:linear-layout {:orientation :vertical
-                                  :layout-width :fill
-                                  :layout-height :fill}
-                  [:button {:text TEXT_5_MIN,
-                            :on-click (fn [_] (trigger-mute-interval INTERVAL_5_MIN TEXT_5_MIN))}]
-                  [:button {:text TEXT_15_MIN,
-                            :on-click (fn [_] (trigger-mute-interval INTERVAL_15_MIN TEXT_15_MIN))}]
-                  [:button {:text TEXT_30_MIN,
-                            :on-click (fn [_] (trigger-mute-interval INTERVAL_30_MIN TEXT_30_MIN))}]
-                  [:button {:text TEXT_45_MIN,
-                            :on-click (fn [_] (trigger-mute-interval INTERVAL_45_MIN TEXT_45_MIN))}]
-                  [:button {:text TEXT_1_HOUR,
-                            :on-click (fn [_] (trigger-mute-interval INTERVAL_1_HOUR TEXT_1_HOUR))}]
-                  ])
+(defn main-layout [activity]
+  [:linear-layout {:orientation :vertical
+                   :layout-width :fill
+                   :layout-height :fill}
+   [:button {:text TEXT_5_MIN,
+             :on-click (fn [_] (trigger-mute-interval activity INTERVAL_5_MIN TEXT_5_MIN))}]
+   [:button {:text TEXT_15_MIN,
+             :on-click (fn [_] (trigger-mute-interval activity INTERVAL_15_MIN TEXT_15_MIN))}]
+   [:button {:text TEXT_30_MIN,
+             :on-click (fn [_] (trigger-mute-interval activity INTERVAL_30_MIN TEXT_30_MIN))}]
+   [:button {:text TEXT_45_MIN,
+             :on-click (fn [_] (trigger-mute-interval activity INTERVAL_45_MIN TEXT_45_MIN))}]
+   [:button {:text TEXT_1_HOUR,
+             :on-click (fn [_] (trigger-mute-interval activity INTERVAL_1_HOUR TEXT_1_HOUR))}]
+   ])
 
 (defactivity org.stuff.briefmuter.MainActivity
   :key :main
-  :on-create
-  (fn [this bundle]
+  (onCreate [this bundle]
+    (.superOnCreate this bundle)
+    (neko.debug/keep-screen-on this)
     (on-ui
      (set-content-view! (*a)
-      (make-ui main-layout)))))
+      (make-ui this (main-layout (*a)))))))

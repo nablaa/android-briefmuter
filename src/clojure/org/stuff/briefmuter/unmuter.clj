@@ -3,9 +3,11 @@
             [neko.context :refer [get-service]]
             [neko.notify :refer [toast cancel]]
             [neko.threading :refer [on-ui]]
+            [neko.log :as log]
             [org.stuff.briefmuter.main :refer [pending-intent]]))
 
 (defn unmute []
+  (log/d "Unmuting")
   (toast "Unmuting")
   (let [audio-manager (get-service :audio)
         alarm-manager (get-service :alarm)]

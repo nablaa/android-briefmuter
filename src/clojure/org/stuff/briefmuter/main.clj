@@ -6,7 +6,8 @@
             [neko.resource :as res]
             [neko.find-view :refer [find-view]]
             [neko.threading :refer [on-ui]]
-            [neko.ui :refer [make-ui]]))
+            [neko.ui :refer [make-ui]]
+            [neko.log :as log]))
 
 ;; We execute this function to import all subclasses of R class. This gives us
 ;; access to all application resources.
@@ -26,6 +27,7 @@
 (def pending-intent (atom nil))
 
 (defn trigger-mute-interval [activity interval text]
+  (log/d "Mute triggered " {:interval interval :text text})
   (toast (str "Muting for " text))
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)
@@ -44,6 +46,7 @@
                         :action [:activity "org.stuff.briefmuter.UNMUTER"]}))))
 
 (defn cancel-pending-intent []
+  (log/d "Cancelling pending intent")
   (toast "Unmuting")
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)]

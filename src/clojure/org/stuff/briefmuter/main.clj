@@ -23,6 +23,8 @@
 (def ^:const INTERVAL_1_HOUR (* 60 60 1000))
 (def ^:const TEXT_1_HOUR "1 hour")
 
+(def pending-intent (atom nil))
+
 (defn trigger-mute-interval [activity interval text]
   (toast (str "Muting for " text))
   (let [alarm-manager (get-service :alarm)
@@ -32,7 +34,16 @@
     (.set alarm-manager
           android.app.AlarmManager/ELAPSED_REALTIME_WAKEUP
           (+ interval (android.os.SystemClock/elapsedRealtime))
-          pi)))
+          pi)
+    (reset! pending-intent pi)))
+
+(defn cancel-pending-intent []
+  (toast "Unmuting")
+  (let [alarm-manager (get-service :alarm)
+        audio-manager (get-service :audio)]
+    (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_NORMAL)
+    (.cancel alarm-manager @pending-intent)
+    (reset! pending-intent nil)))
 
 (defn main-layout [activity]
   [:linear-layout {:orientation :vertical
@@ -48,6 +59,9 @@
              :on-click (fn [_] (trigger-mute-interval activity INTERVAL_45_MIN TEXT_45_MIN))}]
    [:button {:text TEXT_1_HOUR,
              :on-click (fn [_] (trigger-mute-interval activity INTERVAL_1_HOUR TEXT_1_HOUR))}]
+   (if (not (nil? @pending-intent))
+     [:button {:text "Unmute now",
+               :on-click (fn [_] (cancel-pending-intent))}])
    ])
 
 (defactivity org.stuff.briefmuter.MainActivity

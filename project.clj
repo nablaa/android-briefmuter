@@ -1,4 +1,4 @@
-(defproject briefmuter/briefmuter "0.0.3-SNAPSHOT"
+(defproject briefmuter/briefmuter "0.1.0"
   :description "App for muting the phone for a short period of time"
   :url "https://github.com/nablaa/android-briefmuter"
   :license {:name "GNU General Public License, version 2"

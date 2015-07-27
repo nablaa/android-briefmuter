@@ -31,16 +31,22 @@
   (toast (str "Muting for " text))
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)
-        pi (construct-pending-intent activity [:activity "org.stuff.briefmuter.UNMUTER"])]
+        pi (construct-pending-intent activity [:activity "org.stuff.briefmuter.UNMUTER"])
+        calendar (java.util.Calendar/getInstance)
+        date-format (java.text.DateFormat/getTimeInstance)]
     (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_VIBRATE)
     (.set alarm-manager
           android.app.AlarmManager/ELAPSED_REALTIME_WAKEUP
           (+ interval (android.os.SystemClock/elapsedRealtime))
           pi)
     (reset! pending-intent pi)
-    (let [mynotification (notification {:icon R$drawable/ic_launcher
+    (.add calendar java.util.Calendar/MILLISECOND interval)
+    (log/d "Unmuting will happen at" {:time (.toString calendar)})
+    (let [unmute-time (.format date-format (.getTime calendar))
+          unmute-time-str (str "Muted until " unmute-time)
+          mynotification (notification {:icon R$drawable/ic_launcher
                                         :ticker-text "Briefly muted"
-                                        :content-title "Muted until TODO" ; TODO show time here
+                                        :content-title unmute-time-str
                                         :content-text "Select to unmute now"
                                         :action [:activity "org.stuff.briefmuter.UNMUTER"]})]
       ; Set the notification persistent

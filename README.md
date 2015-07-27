@@ -1,5 +1,7 @@
 # Brief Muter for Android
 
+[![Build Status](https://travis-ci.org/nablaa/android-briefmuter.svg?branch=master)](https://travis-ci.org/nablaa/android-briefmuter)
+
 Sometimes there is a need to mute the phone for a short period of time. For
 example, if there is a meeting, you may want to have the phone silent during
 the meeting. Furthermore, you usually want to unmute the phone after the

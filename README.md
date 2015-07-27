@@ -1,4 +1,4 @@
-# Brief Muter for Android
+# Brief Muter for Android ![Logo](res/drawable-ldpi/ic_launcher.png "Logo")
 
 [![Build Status](https://travis-ci.org/nablaa/android-briefmuter.svg?branch=master)](https://travis-ci.org/nablaa/android-briefmuter)
 

@@ -2,7 +2,7 @@
   (:require [neko.activity :refer [defactivity set-content-view!]]
             [neko.context :refer [get-service]]
             [neko.debug :refer [*a]]
-            [neko.notify :refer [toast construct-pending-intent]]
+            [neko.notify :refer [toast construct-pending-intent fire notification cancel]]
             [neko.resource :as res]
             [neko.find-view :refer [find-view]]
             [neko.threading :refer [on-ui]]
@@ -35,7 +35,13 @@
           android.app.AlarmManager/ELAPSED_REALTIME_WAKEUP
           (+ interval (android.os.SystemClock/elapsedRealtime))
           pi)
-    (reset! pending-intent pi)))
+    (reset! pending-intent pi)
+    (fire :muting-triggered
+          (notification {:icon R$drawable/ic_launcher
+                        :ticker-text "Briefly muted"
+                        :content-title "Muted until TODO" ; TODO show time here
+                        :content-text "Select to unmute now"
+                        :action [:activity "org.stuff.briefmuter.UNMUTER"]}))))
 
 (defn cancel-pending-intent []
   (toast "Unmuting")
@@ -43,7 +49,8 @@
         audio-manager (get-service :audio)]
     (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_NORMAL)
     (.cancel alarm-manager @pending-intent)
-    (reset! pending-intent nil)))
+    (reset! pending-intent nil)
+    (cancel :muting-triggered)))
 
 (defn main-layout [activity]
   [:linear-layout {:orientation :vertical

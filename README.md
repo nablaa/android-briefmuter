@@ -10,6 +10,9 @@ meeting, but forgetting that is easy.
 This app automates the unmuting allowing the user to specify the length of
 the mute period. After the period, the phone is automatically unmuted.
 
+![Selecting mute period](screenshot_1.png "Selecting mute period")
+![Mute notification](screenshot_2.png "Mute notification")
+
 ## How to compile and run
 
 Make sure you have [lein droid](https://github.com/clojure-android/lein-droid)

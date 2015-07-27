@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.stuff.briefmuter"
+          package="org.briefmuter"
           android:versionCode="{{version-code}}"
           android:versionName="{{version-name}}" >
 
@@ -20,14 +20,14 @@
     </activity>
     <activity android:name=".MainActivity" android:noHistory="true">
       <intent-filter>
-        <action android:name='org.stuff.briefmuter.MAIN'/>
+        <action android:name='org.briefmuter.MAIN'/>
         <category android:name='android.intent.category.DEFAULT'/>
       </intent-filter>
     </activity>
     <activity android:name=".UnmuteActivity" android:noHistory="true"
               android:theme="@android:style/Theme.NoDisplay">
       <intent-filter>
-        <action android:name='org.stuff.briefmuter.UNMUTER'/>
+        <action android:name='org.briefmuter.UNMUTER'/>
         <category android:name='android.intent.category.DEFAULT'/>
       </intent-filter>
     </activity>

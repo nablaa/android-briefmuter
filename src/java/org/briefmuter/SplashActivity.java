@@ -1,4 +1,4 @@
-package org.stuff.briefmuter;
+package org.briefmuter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import neko.App;
 
-import org.stuff.briefmuter.R;
+import org.briefmuter.R;
 
 public class SplashActivity extends Activity {
 
@@ -22,7 +22,7 @@ public class SplashActivity extends Activity {
         if (firstLaunch) {
             firstLaunch = false;
             setupSplash();
-            App.loadAsynchronously("org.stuff.briefmuter.MainActivity",
+            App.loadAsynchronously("org.briefmuter.MainActivity",
                                    new Runnable() {
                                        @Override
                                        public void run() {
@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
     }
 
     public void proceed() {
-        startActivity(new Intent("org.stuff.briefmuter.MAIN"));
+        startActivity(new Intent("org.briefmuter.MAIN"));
         finish();
     }
 

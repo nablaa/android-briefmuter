@@ -1,10 +1,10 @@
-(ns org.stuff.briefmuter.unmuter
+(ns org.briefmuter.unmuter
   (:require [neko.activity :refer [defactivity]]
             [neko.context :refer [get-service]]
             [neko.notify :refer [toast cancel]]
             [neko.threading :refer [on-ui]]
             [neko.log :as log]
-            [org.stuff.briefmuter.main :refer [pending-intent]]))
+            [org.briefmuter.main :refer [pending-intent]]))
 
 (defn unmute []
   (log/d "Unmuting")
@@ -16,7 +16,7 @@
     (cancel :muting-triggered))
   (reset! pending-intent nil))
 
-(defactivity org.stuff.briefmuter.UnmuteActivity
+(defactivity org.briefmuter.UnmuteActivity
   (onCreate [this bundle]
     (.superOnCreate this bundle)
     (unmute)

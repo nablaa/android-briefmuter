@@ -20,7 +20,7 @@
               {:dependencies [[org.clojure/tools.nrepl "0.2.10"]]
                :target-path "target/debug"
                :android {:aot :all-with-unused
-                         :rename-manifest-package "org.stuff.briefmuter.debug"
+                         :rename-manifest-package "org.briefmuter.debug"
                          :manifest-options {:app-name "BriefMuter (debug)"}
                          :sdk-path "/usr/local/android-sdk/"}}]
 
@@ -29,7 +29,7 @@
               {:dependencies [[org.clojure/tools.nrepl "0.2.10"]]
                :target-path "target/debug"
                :android {:aot :all-with-unused
-                         :rename-manifest-package "org.stuff.briefmuter.debug"
+                         :rename-manifest-package "org.briefmuter.debug"
                          :manifest-options {:app-name "BriefMuter (debug)"}}}]
              :release
              [:android-common

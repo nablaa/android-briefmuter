@@ -1,4 +1,4 @@
-(ns org.stuff.briefmuter.main
+(ns org.briefmuter.main
   (:require [neko.activity :refer [defactivity set-content-view!]]
             [neko.context :refer [get-service]]
             [neko.debug :refer [*a]]
@@ -42,7 +42,7 @@
   (toast (str "Muting for " text))
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)
-        pi (construct-pending-intent activity [:activity "org.stuff.briefmuter.UNMUTER"])
+        pi (construct-pending-intent activity [:activity "org.briefmuter.UNMUTER"])
         calendar (java.util.Calendar/getInstance)
         date-format (android.text.format.DateFormat/getTimeFormat activity)]
     (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_VIBRATE)
@@ -59,7 +59,7 @@
                                         :ticker-text "Briefly muted"
                                         :content-title unmute-time-str
                                         :content-text "Select to unmute now"
-                                        :action [:activity "org.stuff.briefmuter.UNMUTER"]})]
+                                        :action [:activity "org.briefmuter.UNMUTER"]})]
       ; Set the notification persistent
       (set! (. mynotification flags) android.app.Notification/FLAG_ONGOING_EVENT)
       (log/d "mynotification" (.flags mynotification))
@@ -82,7 +82,7 @@
    [:button {:text TEXT_1_HOUR,
              :on-click (fn [_] (trigger-mute-interval activity INTERVAL_1_HOUR_IN_MS TEXT_1_HOUR))}]])
 
-(defactivity org.stuff.briefmuter.MainActivity
+(defactivity org.briefmuter.MainActivity
   :key :main
   (onCreate [this bundle]
     (.superOnCreate this bundle)

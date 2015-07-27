@@ -26,7 +26,18 @@
 
 (def pending-intent (atom nil))
 
+(defn cancel-pending-intent []
+  (log/d "Cancelling pending intent")
+  (toast "Unmuting")
+  (let [alarm-manager (get-service :alarm)
+        audio-manager (get-service :audio)]
+    (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_NORMAL)
+    (.cancel alarm-manager @pending-intent)
+    (reset! pending-intent nil)
+    (cancel :muting-triggered)))
+
 (defn trigger-mute-interval [activity interval text]
+  (cancel-pending-intent)
   (log/d "Mute triggered " {:interval interval :text text})
   (toast (str "Muting for " text))
   (let [alarm-manager (get-service :alarm)
@@ -53,16 +64,6 @@
       (set! (. mynotification flags) android.app.Notification/FLAG_ONGOING_EVENT)
       (log/d "mynotification" (.flags mynotification))
       (fire :muting-triggered mynotification))))
-
-(defn cancel-pending-intent []
-  (log/d "Cancelling pending intent")
-  (toast "Unmuting")
-  (let [alarm-manager (get-service :alarm)
-        audio-manager (get-service :audio)]
-    (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_NORMAL)
-    (.cancel alarm-manager @pending-intent)
-    (reset! pending-intent nil)
-    (cancel :muting-triggered)))
 
 (defn main-layout [activity]
   [:linear-layout {:orientation :vertical

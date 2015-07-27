@@ -44,7 +44,7 @@
         audio-manager (get-service :audio)
         pi (construct-pending-intent activity [:activity "org.stuff.briefmuter.UNMUTER"])
         calendar (java.util.Calendar/getInstance)
-        date-format (java.text.DateFormat/getTimeInstance)]
+        date-format (android.text.format.DateFormat/getTimeFormat activity)]
     (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_VIBRATE)
     (.set alarm-manager
           android.app.AlarmManager/ELAPSED_REALTIME_WAKEUP

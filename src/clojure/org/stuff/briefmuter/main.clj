@@ -69,6 +69,8 @@
   [:linear-layout {:orientation :vertical
                    :layout-width :fill
                    :layout-height :fill}
+   [:text-view {:text "Mute period:"
+                :text-size [25 :dp]}]
    [:button {:text TEXT_5_MIN,
              :on-click (fn [_] (trigger-mute-interval activity INTERVAL_5_MIN TEXT_5_MIN))}]
    [:button {:text TEXT_15_MIN,

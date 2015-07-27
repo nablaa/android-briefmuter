@@ -38,12 +38,15 @@
           (+ interval (android.os.SystemClock/elapsedRealtime))
           pi)
     (reset! pending-intent pi)
-    (fire :muting-triggered
-          (notification {:icon R$drawable/ic_launcher
-                        :ticker-text "Briefly muted"
-                        :content-title "Muted until TODO" ; TODO show time here
-                        :content-text "Select to unmute now"
-                        :action [:activity "org.stuff.briefmuter.UNMUTER"]}))))
+    (let [mynotification (notification {:icon R$drawable/ic_launcher
+                                        :ticker-text "Briefly muted"
+                                        :content-title "Muted until TODO" ; TODO show time here
+                                        :content-text "Select to unmute now"
+                                        :action [:activity "org.stuff.briefmuter.UNMUTER"]})]
+      ; Set the notification persistent
+      (set! (. mynotification flags) android.app.Notification/FLAG_ONGOING_EVENT)
+      (log/d "mynotification" (.flags mynotification))
+      (fire :muting-triggered mynotification))))
 
 (defn cancel-pending-intent []
   (log/d "Cancelling pending intent")

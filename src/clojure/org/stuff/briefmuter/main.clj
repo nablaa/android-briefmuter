@@ -78,11 +78,7 @@
    [:button {:text TEXT_45_MIN,
              :on-click (fn [_] (trigger-mute-interval activity INTERVAL_45_MIN TEXT_45_MIN))}]
    [:button {:text TEXT_1_HOUR,
-             :on-click (fn [_] (trigger-mute-interval activity INTERVAL_1_HOUR TEXT_1_HOUR))}]
-   (if (not (nil? @pending-intent))
-     [:button {:text "Unmute now",
-               :on-click (fn [_] (cancel-pending-intent))}])
-   ])
+             :on-click (fn [_] (trigger-mute-interval activity INTERVAL_1_HOUR TEXT_1_HOUR))}]])
 
 (defactivity org.stuff.briefmuter.MainActivity
   :key :main

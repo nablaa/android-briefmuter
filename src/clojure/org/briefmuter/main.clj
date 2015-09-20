@@ -28,7 +28,6 @@
 
 (defn cancel-pending-intent []
   (log/d "Cancelling pending intent")
-  (toast "Unmuting")
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)]
     (.setRingerMode audio-manager android.media.AudioManager/RINGER_MODE_NORMAL)
@@ -39,7 +38,7 @@
 (defn trigger-mute-interval [activity interval_ms text]
   (cancel-pending-intent)
   (log/d "Mute triggered " {:interval interval_ms :text text})
-  (toast (str "Muting for " text))
+  (toast (str "Muted for the next " text))
   (let [alarm-manager (get-service :alarm)
         audio-manager (get-service :audio)
         pi (construct-pending-intent activity [:activity "org.briefmuter.UNMUTER"])
